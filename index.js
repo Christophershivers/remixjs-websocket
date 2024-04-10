@@ -44,15 +44,15 @@ if (viteDevServer) {
 const server = http.createServer(app);
 const io = new Server(server);
 
-io.on("connection", (socket) =>{
+io.on("connection", (socket) => {
   console.log("user is connected");
-  socket.emit("")
-  socket.on("sendmsg", (message) =>{
-    io.emit("receivemsg", message)
-  })
-  socket.on("disconnect", () =>{
-    console.log("user disconnected")
-  })
+  socket.emit("");
+  socket.on("sendmsg", (message) => {
+    io.emit("receivemsg", message);
+  });
+  socket.on("disconnect", () => {
+    console.log("user disconnected");
+  });
 });
 // Everything else (like favicon.ico) is cached for an hour. You may want to be
 // more aggressive with this caching.
