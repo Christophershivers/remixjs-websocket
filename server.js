@@ -42,7 +42,14 @@ if (viteDevServer) {
 }
 
 const server = http.createServer(app);
-const io = new Server(server);
+const io = new Server(server, {
+  cors: {
+    origin: "*", // Allow all origins
+    // If you want to allow specific origins, replace '*' with an array of allowed origins
+    // For example: ["http://example.com", "http://localhost:3000"]
+    methods: ["GET", "POST"],
+  },
+});
 try{
   io.on("connection", (socket) => {
     console.log("user is connected");
