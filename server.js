@@ -43,17 +43,22 @@ if (viteDevServer) {
 
 const server = http.createServer(app);
 const io = new Server(server);
+try{
+  io.on("connection", (socket) => {
+    console.log("user is connected");
+    socket.emit("");
+    socket.on("sendmsg", (message) => {
+      io.emit("receivemsg", message);
+    });
+    socket.on("disconnect", () => {
+      console.log("user disconnected");
+    });
+  });
 
-io.on("connection", (socket) => {
-  console.log("user is connected");
-  socket.emit("");
-  socket.on("sendmsg", (message) => {
-    io.emit("receivemsg", message);
-  });
-  socket.on("disconnect", () => {
-    console.log("user disconnected");
-  });
-});
+}catch(err){
+  console.log(err)
+}
+
 // Everything else (like favicon.ico) is cached for an hour. You may want to be
 // more aggressive with this caching.
 app.use(express.static("build/client", { maxAge: "1h" }));
