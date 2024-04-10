@@ -3,6 +3,8 @@ import { installGlobals } from "@remix-run/node";
 import compression from "compression";
 import express from "express";
 import morgan from "morgan";
+import http from "http";
+import { Server } from "socket.io";
 
 installGlobals();
 
@@ -39,6 +41,19 @@ if (viteDevServer) {
   );
 }
 
+const server = http.createServer(app);
+const io = new Server(server);
+
+io.on("connection", (socket) =>{
+  console.log("user is connected");
+  socket.emit("")
+  socket.on("sendmsg", (message) =>{
+    io.emit("receivemsg", message)
+  })
+  socket.on("disconnect", () =>{
+    console.log("user disconnected")
+  })
+});
 // Everything else (like favicon.ico) is cached for an hour. You may want to be
 // more aggressive with this caching.
 app.use(express.static("build/client", { maxAge: "1h" }));
@@ -49,6 +64,6 @@ app.use(morgan("tiny"));
 app.all("*", remixHandler);
 
 const port = process.env.PORT || 3000;
-app.listen(port, () =>
+server.listen(port, () =>
   console.log(`Express server listening at http://localhost:${port}`)
 );
