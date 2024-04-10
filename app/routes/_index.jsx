@@ -12,7 +12,7 @@ export default function Index() {
   const [message, setMessage] = useState([])
   const [text, setText] = useState("")
   useEffect(()=>{
-    socket = io("http://localhost:3000/")
+    socket = io()
 
     socket.on("receivemsg", function(recmessage){
       setMessage(prev => [...prev, recmessage])
