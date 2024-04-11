@@ -45,7 +45,6 @@ jobs:
         uses: azure/webapps-deploy@v2
         id: deploy-to-webapp
         with:
-          app-name: "<YOUR_APP_NAME>"
+          app-name: "new-remix"
           slot-name: "Production"
-          publish-profile: ${{ secrets.<YOUR_AZUREAPPSERVICE_PUBLISHPROFILE> }}
           package: "release.zip"
